@@ -1,0 +1,126 @@
+﻿@page "/reg"
+@attribute [Authorize(Roles = "Student")]
+<h3>Registration</h3>
+
+@if (IsPermitted == false)
+{
+    <div>
+        <h3>Your resigtration start from @permission.StartDate to @permission.EndDate</h3>
+    </div>
+}
+else
+{
+
+    @if (Courses == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>StudentID</th>
+                    <th>Student Name</th>
+                    <th>GPA</th>
+                    <th>Finished Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>@Student.Id</td>
+                    <td>@Student.FullName</td>
+                    <td>@Student.GPA</td>
+                    <td>@Student.FinishedHours</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <select class="form-control w-25" @onchange="GetLecturer">
+            <option>Select Course</option>
+            @foreach (var item in Courses)
+            {
+                <option>
+                    @item.Name
+                </option>
+            }
+        </select>
+    }
+    @if (Lecturers != null)
+    {
+        <select class="form-control w-25" @onchange="GetSlotPerDayid">
+            <option>Select Lecturer</option>
+            @foreach (var lecturer in Lecturers)
+            {
+                <option>
+                    @lecturer.FullName
+                </option>
+            }
+        </select>
+    }
+    @if (SlotIds != null)
+    {
+        <select class="form-control w-25" @onchange="PutSlotidInProp">
+            @foreach (var s in SlotIds)
+            {
+                <option>Select slot</option>
+                <option>
+                    @s
+                </option>
+            }
+        </select>
+    }
+
+
+    <button @onclick="GetClassID">
+        ADD COURSE
+    </button>
+    <button @onclick="Register">
+        Register
+    </button>
+
+
+    @if (@ErrorMessageForOverlapping != null)
+    {
+        <div>
+            <h5>@ErrorMessageForOverlapping</h5>
+        </div>
+    }
+    <div class="my-5 table">
+        <table>
+            <tr>
+                <th>08:30 AM - 10:00 AM</th>
+                <th>10:30 AM - 12:00 PM</th>
+                <th>12:30 AM - 02:00 PM</th>
+                <th>02:30 AM - 04:00 PM</th>
+            </tr>
+            @foreach (var d in @Schdule.X)
+            {
+                <tr>
+                    @foreach (var s in d)
+                    {
+                        <td>
+                            @s.CourseName <br>
+                            @s.LecName <br>
+                            @s.Id <br>
+                            <button class="btn btn-danger" @onclick="@(e => test1(s.Id))">Remove</button>
+
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+    @if (IsRegSuccessed == true)
+    {
+        <h2>The Reg is success</h2>
+        <button class="btn btn-danger" @onclick="@(()=>NavigationManager.NavigateTo($"/studentsched/{@Student.Id}"))">View Sched</button>
+    }
+
+
+
+}
+
+
+
+

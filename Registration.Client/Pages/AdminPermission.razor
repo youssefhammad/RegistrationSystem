@@ -1,0 +1,39 @@
+﻿@page "/adminPermissions"
+@attribute [Authorize(Roles = "Admin")]
+
+
+
+<h3>AdminPermission</h3>
+
+@if (Permission == null)
+{
+    <span>Loading</span>
+}
+else
+{
+    <div>
+        <h3>The Logged in admin's Id = @Admin.Id and Name is @Admin.FullName</h3>
+    </div>
+    <h6>
+        The last permission start date is @Permission.StartDate and end date
+        @Permission.EndDate by admin @Permission.AdminName
+    </h6>
+}
+<div class="my-3">
+    <label>Start date</label> <br />
+    <input type="datetime-local" @bind-value="PostPermission.StartDate" />
+</div>
+<div class="my-3">
+    <label>End date</label> <br />
+    <input type="datetime-local" @bind-value="PostPermission.EndDate" />
+</div>
+<div class="my-3">
+    <button @onclick="UpdatePermissiondate">Update Date</button>
+</div>
+@if(Issuccess == true)
+{
+    <div>
+        <h4>@message</h4>
+    </div>
+}
+

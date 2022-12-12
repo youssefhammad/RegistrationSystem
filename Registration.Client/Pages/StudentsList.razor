@@ -1,0 +1,39 @@
+﻿@page "/students"
+@attribute [Authorize(Roles = "Admin")]
+
+<h3>StudentsList</h3>
+
+@if (Students == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <h3>The Logged in admin's Id = @Admin.Id and Name is @Admin.FullName</h3>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>GPA</th>
+                <th>View schdule</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Students)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                <td>@student.FullName</td>
+                <td>@student.GPA</td>
+                <td><button class="btn btn-danger" @onclick="@(()=>NavigationManager.NavigateTo($"/studentsched/{@student.Id}"))">View</button></td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+}
+
+

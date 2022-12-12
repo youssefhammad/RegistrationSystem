@@ -1,0 +1,34 @@
+﻿
+@page "/studentsched/{StudentId:int}"
+
+<h3>Studentviewschdule</h3>
+
+<h3>@StudentId</h3>
+
+<div class="my-5 table">
+        <table>
+            <tr>
+                <th>08:30 AM - 10:00 AM</th>
+                <th>10:30 AM - 12:00 PM</th>
+                <th>12:30 AM - 02:00 PM</th>
+                <th>02:30 AM - 04:00 PM</th>
+            </tr>
+            @foreach (var d in @Schdule.X)
+            {
+                <tr>
+                    @foreach (var s in d)
+                    {
+                        <td>
+                            @s.Id <br>
+                            @s.CourseName <br>
+                            @s.LecName
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+
