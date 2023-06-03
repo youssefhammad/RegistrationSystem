@@ -32,7 +32,7 @@ namespace Registration.Server.Controllers
 
             if (item == null)
             {
-                return NotFound();
+                return BadRequest();
             }
             else
             {
